@@ -5,45 +5,71 @@
 
 let campominato = document.querySelector(".campo-minato");
 let campoPunteggio = document.getElementById("campo-punteggio");
-const difficolta = document.getElementById("difficolta");
 
 const btn = document.getElementById("btn");
+const difficolta = document.getElementById("difficolta").value;
+console.log(difficolta);
+//serie di variabili utili alla difficolta del gioco
+let nBomb = 0;
+let nCaselle = 0;
+let nClick = 0;
+let nRiga = 0;
 
-//crea un array di 64 numeri
-const myArrNum = genArrMinMax(16, 1, 100);
+if (difficolta == "default") {
+    nBomb = 16;
+    nCaselle = 100;
+    nClick = 30;
+    nRiga = 10;
+} else if(difficolta == "media"){
+    nBomb = 20;
+    nCaselle = 81;
+    nClick = 20;
+    nRiga = 9;
+} else{
+    nBomb = 23;
+    nCaselle = 49;
+    nClick = 15;
+    nRiga = 7;
+}
+
+//crea un array di bombe
+const myArrNum = genArrMinMax(nBomb, 1, 100);
 console.log(myArrNum);
 let punteggio = 0;
+
+//aggiungo al css la width personalizzata
+
 
 
 btn.addEventListener("click",
 
     function () {
-        console.log(difficolta);
+
         let CountButtonHomeClicks = 0;
         campominato.innerHTML = '';
-        for (let i = 1; i <= 100; i++) {
+        for (let i = 1; i <= nCaselle; i++) {
             let nuovoElemento = creaBox();
             nuovoElemento.append(i);
 
-            
+
             nuovoElemento.addEventListener("click",
                 function () {
-                    if(CountButtonHomeClicks != 20){
-                    CountButtonHomeClicks++;
-                    console.log(CountButtonHomeClicks);
-                    if (myArrNum.includes(i)) {
-                        nuovoElemento.classList.add("red");
-                        punteggio--;
+                    if (CountButtonHomeClicks != nClick) {
+                        CountButtonHomeClicks++;
+                        console.log(CountButtonHomeClicks);
+                        if (myArrNum.includes(i)) {
+                            nuovoElemento.classList.add("red");
+                            punteggio--;
+                        } else {
+                            nuovoElemento.classList.add("blue");
+                            punteggio++;
+                        }
+
                     } else {
-                        nuovoElemento.classList.add("blue");
-                        punteggio++;
+                        campoPunteggio.innerText = "il tuo punteggio e di: " + punteggio + " punti";
                     }
-                  
-                }else{
-                    campoPunteggio.innerText = "il tuo punteggio e di: " + punteggio + " punti";
-                }
                 });
-            
+
             campominato.appendChild(nuovoElemento);
         }
     });
@@ -74,8 +100,9 @@ function creaBox() {
 
     const box = document.createElement("div");
     box.classList.add("box");
+    box.style.width = "calc(100%/10)";
     return box;
-}    
+}
 
 
 
