@@ -48,7 +48,7 @@ btn.addEventListener("click",
         let CountButtonHomeClicks = 0;
         campominato.innerHTML = '';
         for (let i = 1; i <= nCaselle; i++) {
-            let nuovoElemento = creaBox();
+            let nuovoElemento = creaBox(nRiga);
             nuovoElemento.append(i);
 
 
@@ -96,11 +96,12 @@ function genArrMinMax(quanti, minNum, maxNum) {
     return arrayRandom;
 }
 
-function creaBox() {
+function creaBox(nRighe) {
 
     const box = document.createElement("div");
     box.classList.add("box");
-    box.style.width = "calc(100%/10)";
+
+    box.style.width =`calc(100%/${nRighe})`;
     return box;
 }
 
