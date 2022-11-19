@@ -3,39 +3,22 @@
 // Ci saranno quindi 10 caselle per ognuna delle 10 righe.
 // Quando l’utente clicca su ogni cella, la cella cliccata si colora di azzurro ed emetto un messaggio in console con il numero della cella cliccata.
 
+//tramite la difficolta aumento/diminuisco il numero di bombe
+//diminuisco/aumento il numero di caselle
+//diminisco/aumento il numero di click
+
+//facile: 100 caselle / 16 bome / 30 click (default)
+
+//media 81 caselle / 20 bombe / 20 click
+
+//difficile 49 caselle / 23 bombe / 15 click
+
+
 let campominato = document.querySelector(".campo-minato");
 let campoPunteggio = document.getElementById("campo-punteggio");
-
+const main = document.querySelector("main");
 const btn = document.getElementById("btn");
-const difficolta = document.getElementById("difficolta").value;
-console.log(difficolta);
-//serie di variabili utili alla difficolta del gioco
-let nBomb = 0;
-let nCaselle = 0;
-let nClick = 0;
-let nRiga = 0;
 
-if (difficolta == "default") {
-    nBomb = 16;
-    nCaselle = 100;
-    nClick = 30;
-    nRiga = 10;
-} else if(difficolta == "media"){
-    nBomb = 20;
-    nCaselle = 81;
-    nClick = 20;
-    nRiga = 9;
-} else{
-    nBomb = 23;
-    nCaselle = 49;
-    nClick = 15;
-    nRiga = 7;
-}
-
-//crea un array di bombe
-const myArrNum = genArrMinMax(nBomb, 1, 100);
-console.log(myArrNum);
-let punteggio = 0;
 
 //aggiungo al css la width personalizzata
 
@@ -44,6 +27,36 @@ let punteggio = 0;
 btn.addEventListener("click",
 
     function () {
+        main.style.display = "flex";
+        const difficolta = document.getElementById("difficolta").value;
+        console.log(difficolta);
+        //serie di variabili utili alla difficolta del gioco
+        let nBomb = 0;
+        let nCaselle = 0;
+        let nClick = 0;
+        let nRiga = 0;
+
+        if (difficolta == "default") {
+            nBomb = 16;
+            nCaselle = 100;
+            nClick = 30;
+            nRiga = 10;
+        } else if (difficolta == "media") {
+            nBomb = 20;
+            nCaselle = 81;
+            nClick = 20;
+            nRiga = 9;
+        } else {
+            nBomb = 23;
+            nCaselle = 49;
+            nClick = 15;
+            nRiga = 7;
+        }
+
+        //crea un array di bombe
+        const myArrNum = genArrMinMax(nBomb, 1, 100);
+        console.log(myArrNum);
+        let punteggio = 0;
 
         let CountButtonHomeClicks = 0;
         campominato.innerHTML = '';
@@ -101,18 +114,8 @@ function creaBox(nRighe) {
     const box = document.createElement("div");
     box.classList.add("box");
 
-    box.style.width =`calc(100%/${nRighe})`;
+    box.style.width = `calc(100%/${nRighe})`;
     return box;
 }
 
 
-
-//tramite la difficolta aumento/diminuisco il numero di bombe
-//diminuisco/aumento il numero di caselle
-//diminisco/aumento il numero di click
-
-//facile: 100 caselle / 16 bome / 30 click (default)
-
-//media 81 caselle / 20 bombe / 20 click
-
-//difficile 49 caselle / 23 bombe / 15 click
